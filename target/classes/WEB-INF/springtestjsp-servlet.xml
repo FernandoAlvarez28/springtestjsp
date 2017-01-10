@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="dao" class="fernandoalvarez.dao.DAO">
+		<!-- init-method="init" -->
+	</bean>
+
+	<bean id="ThingController" class="fernandoalvarez.control.ThingController">
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- <mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:annotation-driven />-->
+</beans>
