@@ -1,5 +1,6 @@
 package fernandoalvarez.control;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import fernandoalvarez.dao.DAO;
 import fernandoalvarez.dto.Thing;
 
 @Controller
 public class ThingController {
-	private List<Thing> things = new ArrayList<>();
+	private List<Thing> things;
 	int id = 0;
+	private DAO dao;
+
+	public ThingController() {
+		dao = new DAO();
+		try {
+			things = dao.fromGson();
+		} catch (FileNotFoundException e) {
+			things = new ArrayList<>();
+			e.printStackTrace();
+		}
+	}
 
 	@RequestMapping(value = "/")
 	public ModelAndView thing() {
@@ -38,15 +51,11 @@ public class ThingController {
 		model.addAttribute("things", things);
 		return "result";
 	}
-	
-	@RequestMapping(value ="/save")
-	public String toGson(Model model){
-		Gson gson = new Gson();
-		List<String> strings = new ArrayList<>();
-		for (Thing thing : things) {
-			strings.add(gson.toJson(thing));
-		}
-		model.addAttribute("strings", strings);
+
+	@RequestMapping(value = "/save")
+	public String toGson(Model model) {
+		dao.toGson(things);
+		// model.addAttribute("strings", dao.toGson(things));
 		return "thing";
 	}
 }
