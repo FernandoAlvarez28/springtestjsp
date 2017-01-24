@@ -4,9 +4,9 @@
 
 <beans>
 
-	<bean id="dao" class="fernandoalvarez.dao.DAO">
-		<!-- init-method="init" -->
-	</bean>
+	<!-- <bean id="dao" class="fernandoalvarez.dao.DAO">
+		
+	</bean> -->
 
 	<bean id="ThingController" class="fernandoalvarez.control.ThingController">
 	</bean>
