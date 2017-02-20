@@ -15,18 +15,16 @@
 <body>
 	<h1>Temporary Title</h1>
 	<h2>Insert some random stuff</h2>
-
+	<button id="btnMostrar" type="button">Show/Hide EVERYTHING</button>
 	<form id="thingForm" action="/addThing" method="POST">
 		<label>Name</label> <br> <input id="name" name="name"></input> <br>
 		<br> <label>Number</label> <br> <input id="number"
 			name="number"></input>
 
-		<button onclick="getRandomNumber()" type="button">some random
-			number</button>
-		<br>
-		<br>
+		<button id="btnRandom" type="button">some random number</button>
+		<br> <br>
 
-		<button onclick="validateForm()" type="button">submit</button>
+		<button id="btnSubmit" type="button">submit</button>
 	</form>
 
 	<a href="/viewThings">view things</a>
@@ -39,31 +37,42 @@
 		</c:forEach>
 	</c:if>
 
-	<script type="text/javascript">
-		function getRandomNumber() {
-			var randomNumber = Math.floor((Math.random() * 1000000) + 1);
-			$("#number").val(randomNumber);
-		}
+	<script src="http://code.jquery.com/jquery-3.1.1.js"
+		integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+		crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btnRandom").click(function() {
+				var randomNumber = Math.floor((Math.random() * 1000000) + 1);
+				$("#number").val(randomNumber);
+			});
+			$("#btnMostrar").click(function() {
+				if ($("#thingForm").is(":visible")) {
+					$("#thingForm").hide();
+					$("#number").val("");
+					$("#name").val("");
+				} else {
+					$("#thingForm").show();
+				}
+			});
+			$("#btnSubmit").click(function() {
+				var isCorrect = true;
 
-		function validateForm() {
-			var isCorrect = true;
+				if ($("#name").val() == "") {
+					alert("Preencha o nome");
+					isCorrect = false;
+				}
 
-			if ($("#name").val() == "") {
-				alert("Preencha o nome");
-				isCorrect = false;
-			}
+				if ($("#number").val() == "") {
+					$("#btnRandom").click();
+				}
 
-			if ($("#number").val() == "") {
-				getRandomNumber();
-			}
-
-			if (isCorrect) {
-				$("#thingForm").submit();
-			}
-		}
+				if (isCorrect) {
+					$("#thingForm").submit();
+				}
+			})
+		});
 	</script>
 
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"
-		type="text/javascript"></script>
 </body>
 </html>
